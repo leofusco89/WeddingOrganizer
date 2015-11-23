@@ -14,10 +14,12 @@ else{
 
 
   //Traigo clima
+/*
   $datos = simplexml_load_file('http://weather.service.msn.com/data.aspx?src=vista&weadegreetype=C&culture=es-ES&wealocations=wc:ARBA0107');
   $fecha = $datos->weather->current['date'];
   $temperatura = $datos->weather->current['temperature']."°C";
   $clima = $datos->weather->current['skytext'];
+*/
 ?>
 
 
@@ -33,9 +35,13 @@ else{
     <script src="js/funcionesMapa.js"></script>
     <script src="js/geolocalizacionCommon.js"></script>
     <script src="js/moduloGeolocalizacion.js"></script>
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js"></script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
+<!--<script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
+--> 
+    <script src="js/exporting.js"></script>
+    <script src="js/highcharts.js"></script>
+
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js"></script>
     
     <script type="text/javascript">
 
@@ -133,10 +139,10 @@ else{
         });
       }
 
-      function administrarInvitados(){
+      function AdministrarInvitados(){
         var funcionAjax = $.ajax
           (
-             { url: "administrarInvitados.php",
+             { url: "AdministrarInvitados.php",
                type:"post"
              }
              
@@ -369,20 +375,23 @@ else{
 
   <body onload="LoadFiesta()"> 
   	  <div class="encabezado">
-        <a href="menu.php" display="inline">
+        <a href="Menu.php" display="inline">
           <img src="img/menu.png"/>
-        <a href="editarUsuario.php" display="inline">
+        <a href="EditarUsuario.php" display="inline">
           <img src="img/configuration.jpg"/>
         </a>
-        <a href="logout.php" display="inline">
+        <a href="Logout.php" display="inline">
           <img src="img/logout.jpg"/>
         </a>
   	  	<h1 id="usuario"><?php 
         echo $_SESSION["usuarioActual"];?></h1>
 
-        <h1 style="float: right;line-height: 20px;"><?php echo $clima; ?></h1>
-        <h1 style="float: right;line-height: 20px;"><?php echo $temperatura; ?></h1>
-        <h1 style="float: right;line-height: 20px;"><?php echo $fecha; ?></h1>
+        <img src="Fotos/<?php echo $usuario->foto;?>" style="margin-top: 5px; width: 50px; height: 50px; border: 2px solid #010; border-radius: 5px;"/>
+<!--
+        <h1 style="float: right;line-height: 20px;"><?php //echo $clima; ?></h1>
+        <h1 style="float: right;line-height: 20px;"><?php //echo $temperatura; ?></h1>
+        <h1 style="float: right;line-height: 20px;"><?php //echo $fecha; ?></h1>
+-->
   	  </div>
       <div class="menuMenu">
         <form>

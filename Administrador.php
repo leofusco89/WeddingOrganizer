@@ -17,11 +17,11 @@ else{
   $configuracion = Configuraciones::TraerConfiguracion();
 
   //Traigo clima
-  $datos = simplexml_load_file('http://weather.service.msn.com/data.aspx?src=vista&weadegreetype=C&culture=es-ES&wealocations=wc:ARBA0107');
+  /*$datos = simplexml_load_file('http://weather.service.msn.com/data.aspx?src=vista&weadegreetype=C&culture=es-ES&wealocations=wc:ARBA0107');
   $fecha = $datos->weather->current['date'];
   $temperatura = $datos->weather->current['temperature']."°C";
   $clima = $datos->weather->current['skytext'];
-
+*/
 ?>
 
 <html >
@@ -105,14 +105,15 @@ function validate(evt) {
 
   <body background="img/bgpattern.jpg">  
       <div class="encabezado">
-        <a href="logout.php" display="inline">
+        <a href="Logout.php" display="inline">
           <img src="img/logout.jpg"/>
         </a>
         <h1 id="usuario">Usuario Administrador</h1>
-
-        <h1 style="float: right;line-height: 20px;"><?php echo $clima; ?></h1>
-        <h1 style="float: right;line-height: 20px;"><?php echo $temperatura; ?></h1>
-        <h1 style="float: right;line-height: 20px;"><?php echo $fecha; ?></h1>
+<!--
+        <h1 style="float: right;line-height: 20px;"><?php //echo $clima; ?></h1>
+        <h1 style="float: right;line-height: 20px;"><?php //echo $temperatura; ?></h1>
+        <h1 style="float: right;line-height: 20px;"><?php //echo $fecha; ?></h1>
+-->
       </div>
 
       <br>

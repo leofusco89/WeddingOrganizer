@@ -3,7 +3,13 @@ session_start();
 
 if (isset($_SESSION["usuarioActual"])) 
 {
-	header("Location: menu.php");
+  if ($_SESSION["usuarioActual"] == "admin") {
+    header("Location: Administrador.php");
+  }
+  else
+  {
+    header("Location: Menu.php");  
+  }
 }
 ?>
 
@@ -30,7 +36,7 @@ if (isset($_SESSION["usuarioActual"]))
         	funcionAjax.done(function(resultado){
                 switch(resultado) {
                   case "correcto":
-                      window.location.href="menu.php";
+                      window.location.href="Menu.php";
                       break;
                   case "administrador":
                       window.location.href="Administrador.php";
@@ -61,7 +67,7 @@ if (isset($_SESSION["usuarioActual"]))
             }?>"><br>
 				<input type="password" id="password" placeholder="contraseña" name="password" onkeydown="if (event.keyCode == 13) document.getElementById('login').click()"><br>
 				<input id="login" type="button"   value="Login" onclick="login()">
-			<form action="register.php">
+			<form action="Register.php">
 				<input type="submit"   value="Register">
 			</form>
 		</div>

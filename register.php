@@ -16,6 +16,8 @@ if (isset($_SESSION["usuarioActual"]))
 
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="js/funcionesAjax.js"></script>
+
   <script type="text/javascript">
     function register()
     { 
@@ -28,9 +30,31 @@ if (isset($_SESSION["usuarioActual"]))
         sexo = "Mujer";
        }
 
+      var foto=$("#imagen").attr('src');  
+      
+      var files = $("#fichero").get(0).files;
+      if (files[0] != null)
+        {
+          foto = files[0].name;
+          var accionFoto = 'nueva';
+          }
+      else
+          {
+            foto = foto.replace("Fotos/", "");
+            if (foto == "")
+             {
+              var accionFoto = 'noesta';    
+             }
+            else
+             {
+              var accionFoto = 'existe';
+             }  
+          }     
+          
+
       var funcionAjax = $.ajax
         (
-           { url: "insertUsuario.php",
+           { url: "InsertUsuario.php",
              type:"post",
 
              data:{ 
@@ -39,6 +63,8 @@ if (isset($_SESSION["usuarioActual"]))
                     apellido:$("#apellido").val(),
                     sexo:sexo,
                     email:$("#email").val(),
+                    foto:foto,
+                    queHacerConLaFoto:accionFoto,
                     pass:$("#pass").val(),
                     confPass:$("#confPass").val()
                   }      
@@ -60,7 +86,7 @@ if (isset($_SESSION["usuarioActual"]))
 
   <body background="img/bgpattern.jpg">  
       <div class="encabezado">
-        <a href="logout.php" display="inline">
+        <a href="Logout.php" display="inline">
           <img src="img/logout.jpg"/>
         </a>
       </div>
@@ -85,6 +111,9 @@ if (isset($_SESSION["usuarioActual"]))
             <img src="img/mujer.png">
           </label><br><br>
           <p>E-mail    </p><input id="email"    type="text"     maxlength="100" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+          <p>Foto de perfil</p><input type="file" name="foto"  id="fichero" onchange="cargarFoto()" autofocus="" />
+          <img  src="Fotos/profile_default.jpg" id="imagen" autofocus="" style="width: 250px; height: 250px; display: block;"/>
+          <br>
           <p>Contraseña</p><input id="pass"     type="password" maxlength="16" required>
           <p>Confirmar Contraseña</p><input id="confPass" type="password" maxlength="16" required>
           <input type="submit" name="sumit" value="Registrar" /><input type="reset"/>

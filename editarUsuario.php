@@ -14,10 +14,12 @@ else{
 };
 
   //Traigo clima
+/*
   $datos = simplexml_load_file('http://weather.service.msn.com/data.aspx?src=vista&weadegreetype=C&culture=es-ES&wealocations=wc:ARBA0107');
   $fecha = $datos->weather->current['date'];
   $temperatura = $datos->weather->current['temperature']."°C";
   $clima = $datos->weather->current['skytext'];
+*/
 ?>
 
 <html >
@@ -29,8 +31,8 @@ else{
 
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <script type="text/javascript">
-    </script>
+    <script type="text/javascript" src="js/funcionesAjax.js"></script>
+
   <script type="text/javascript">
     function actualizarUsuario()
     { 
@@ -43,6 +45,28 @@ else{
         sexo = "Mujer";
        }
 
+      var foto=$("#imagen").attr('src');  
+      
+      var files = $("#fichero").get(0).files;
+      if (files[0] != null)
+        {
+          foto = files[0].name;
+          var accionFoto = 'nueva';
+          }
+      else
+          {
+            foto = foto.replace("Fotos/", "");
+            if (foto == "")
+             {
+              var accionFoto = 'noesta';    
+             }
+            else
+             {
+              var accionFoto = 'existe';
+             }  
+          }     
+          
+
       var funcionAjax = $.ajax
         (
            { url: "UpdateUsuario.php",
@@ -53,6 +77,8 @@ else{
                     apellido:$("#apellido").val(),
                     sexo:sexo,
                     email:$("#email").val(),
+                    foto:foto,
+                    queHacerConLaFoto:accionFoto,
                     pass:$("#pass").val(),
                     nPass:$("#nPass").val(),
                     confNPass:$("#confNPass").val()
@@ -70,6 +96,10 @@ else{
             case "2":
                 alert("Error: Contraseña actual no coincide con la contraseña del usuario");
                 break;
+            case "3":
+                alert("Sus datos fueron actualizados");
+                window.location.href="Menu.php";
+                break;
             default:
                 alert(resultado);
 
@@ -82,20 +112,23 @@ else{
 
   <body background="img/bgpattern.jpg">  
       <div class="encabezado">
-        <a href="menu.php" display="inline">
+        <a href="Menu.php" display="inline">
           <img src="img/menu.png"/>
-        <a href="editarUsuario.php" display="inline">
+        <a href="EditarUsuario.php" display="inline">
           <img src="img/configuration.jpg"/>
         </a>
-        <a href="logout.php" display="inline">
+        <a href="Logout.php" display="inline">
           <img src="img/logout.jpg"/>
         </a>
         <h1 id="usuario"><?php 
         echo $_SESSION["usuarioActual"];?></h1>
-
-        <h1 style="float: right;line-height: 20px;"><?php echo $clima; ?></h1>
-        <h1 style="float: right;line-height: 20px;"><?php echo $temperatura; ?></h1>
-        <h1 style="float: right;line-height: 20px;"><?php echo $fecha; ?></h1>
+        
+        <img src="Fotos/<?php echo $usuario->foto;?>" style="margin-top: 5px; width: 50px; height: 50px; border: 2px solid #010; border-radius: 5px;"/>
+<!--
+        <h1 style="float: right;line-height: 20px;"><?php //'echo $clima; ?></h1>
+        <h1 style="float: right;line-height: 20px;"><?php //echo $temperatura; ?></h1>
+        <h1 style="float: right;line-height: 20px;"><?php //echo $fecha; ?></h1>
+-->
       </div>
 
       <br>
@@ -110,20 +143,23 @@ else{
           <p>Sexo      </p>
           <br>
           <label>
-            <input type="radio" id="sexo" name="sexo" value="hombre" checked="<?php 
+            <input type="radio" id="sexo" name="sexo" value="hombre"<?php 
             if ($usuario->sexo == "Hombre") {
               echo 'checked';
-            }?>">
+            }?>>
             <img src="img/hombre.png">
           </label>
           <label>
-            <input type="radio" name="sexo" value="mujer" checked="<?php 
+            <input type="radio" name="sexo" value="mujer" <?php 
             if ($usuario->sexo == "Mujer") {
               echo 'checked';
-            }?>">
+            }?>>
             <img src="img/mujer.png">
           </label><br><br>
           <p>E-mail    </p><input id="email"    type="text"     maxlength="100" required value="<?php echo $usuario->email;?>"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+          <p>Foto de perfil</p><input type="file" name="foto"  id="fichero" onchange="cargarFoto()" autofocus="" />
+          <img  src="Fotos/<?php echo $usuario->foto;?>" id="imagen" autofocus="" style="width: 250px; height: 250px; display: block;"/>
+          <br>
           <p>Contraseña actual</p><input id="pass"     type="password" maxlength="16" required>
           <p>Nueva Contraseña</p><input id="nPass" type="password" maxlength="16">
           <p>Confirmar Nueva Contraseña</p><input id="confNPass" type="password" maxlength="16">

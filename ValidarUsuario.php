@@ -3,7 +3,8 @@ session_start();
 include_once("class/Usuarios.php");
 include_once("class/AccesoDatos.php");
 
-$usuario = Usuarios::ValidarUsuario($_POST['usuario'], $_POST['clave']);
+$contrasenia = sha1($_POST['clave']);
+$usuario = Usuarios::ValidarUsuario($_POST['usuario'], $contrasenia);
 
 if(isset($usuario->usuario))
 {	

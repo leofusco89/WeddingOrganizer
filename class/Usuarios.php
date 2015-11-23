@@ -6,6 +6,7 @@ class usuarios
   	public $apellido;
   	public $sexo;
  	public $email;
+ 	public $foto;
   	public $contrasenia;
 
   	public static function BorrarUsuario($usuario)
@@ -26,12 +27,14 @@ class usuarios
 																   apellido    = :apellido,
 																   sexo        = :sexo,
 																   email 	   = :email,
+																   foto 	   = :foto,
 																   contrasenia = :contrasenia
 															 WHERE usuario = :usuario");
 			$consulta->bindValue(':nombre', $this->nombre, PDO::PARAM_STR);
 			$consulta->bindValue(':apellido', $this->apellido, PDO::PARAM_STR);
 			$consulta->bindValue(':sexo', $this->sexo, PDO::PARAM_STR);
 			$consulta->bindValue(':email', $this->email, PDO::PARAM_STR);
+			$consulta->bindValue(':foto', $this->foto, PDO::PARAM_STR);
 			$consulta->bindValue(':contrasenia', $this->contrasenia, PDO::PARAM_STR);
 			$consulta->bindValue(':usuario', $this->usuario, PDO::PARAM_STR);
 			return $consulta->execute();
@@ -40,12 +43,13 @@ class usuarios
 	 public function InsertarUsuario()
 	 {
 				$objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-				$consulta =$objetoAccesoDato->RetornarConsulta("INSERT INTO usuarios(usuario, nombre, apellido, sexo, email, contrasenia)values(:usuario, :nombre, :apellido, :sexo, :email, :contrasenia)");
+				$consulta =$objetoAccesoDato->RetornarConsulta("INSERT INTO usuarios(usuario, nombre, apellido, sexo, email, foto, contrasenia)values(:usuario, :nombre, :apellido, :sexo, :email, :foto, :contrasenia)");
 				$consulta->bindValue(':usuario', $this->usuario, PDO::PARAM_STR);
 				$consulta->bindValue(':nombre', $this->nombre, PDO::PARAM_STR);
 				$consulta->bindValue(':apellido', $this->apellido, PDO::PARAM_STR);
 				$consulta->bindValue(':sexo', $this->sexo, PDO::PARAM_STR);
 				$consulta->bindValue(':email', $this->email, PDO::PARAM_STR);
+				$consulta->bindValue(':foto', $this->foto, PDO::PARAM_STR);
 				$consulta->bindValue(':contrasenia', $this->contrasenia, PDO::PARAM_STR);
 				$consulta->execute();		
 				return $objetoAccesoDato->RetornarUltimoIdInsertado();

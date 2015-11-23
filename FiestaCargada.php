@@ -28,5 +28,5 @@ $usuario = Usuarios::TraerUnUsuario($_SESSION["usuarioActual"]);
       value="<?php echo $fiesta->numero;?>">
   <input id="mapa"   type="button" value="Ver en mapa" onclick="VerEnMapa('<?php echo $fiesta->provincia;?>', '<?php echo $fiesta->calle;?>' + ' '  + '<?php echo $fiesta->numero;?>', '<?php echo $fiesta->localidad;?>', 'Fiesta de <?php echo $usuario->nombre;?> <?php echo $usuario->apellido;?>')">
   <div id="principal"></div>
-  <input type="submit" value="Editar" /><input type="button" value="Administrar invitados" onclick="administrarInvitados()"/>
+  <input type="submit" value="Editar" /><input type="button" value="Administrar invitados" onclick="AdministrarInvitados()"/>
   </form>
