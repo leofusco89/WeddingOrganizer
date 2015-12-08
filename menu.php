@@ -92,7 +92,7 @@ else{
           
         funcionAjax.done(function(resultado)
         {
-          $("#menuMisFiestas").load(resultado);
+            $("#menuMisFiestas").load(resultado);
         });
       }
       function editarFiesta(){
@@ -173,7 +173,7 @@ else{
         }
         else
         {
-          alert("Por favor, completar Provincia, Localidad, Calle y Número");
+          abrirPopup("Error", "Por favor, completar Provincia, Localidad, Calle y Número");
         };
       }
 
@@ -193,13 +193,13 @@ else{
         {
           switch(resultado) {
             case "1":
-                alert("No se pueden añadir más de " + maxMesas + " mesas");
+                abrirPopup("Error", "No se pueden añadir más de " + maxMesas + " mesas");
                 break;
             case "2":
-                alert("Debe guardar al menos una mesa para poder añadir una nueva");
+                abrirPopup("Error", "Debe guardar al menos una mesa para poder añadir una nueva");
                 break;
             default:
-                alert("Mesa añadida");
+                abrirPopup("Mesa añadida", "Una mesa fue añadida");
                 $("#opcionesMesa").html(resultado);
           }
         });
@@ -252,37 +252,37 @@ else{
         {
           switch(resultado) {
             case $("#1NA").val():
-                alert("Invitado repetido: " + $("#1NA").val());
+              abrirPopup("Error", "Invitado repetido: " + $("#1NA").val());
                 break;
             case $("#2NA").val():
-                alert("Invitado repetido: " + $("#2NA").val());
+              abrirPopup("Error", "Invitado repetido: " + $("#2NA").val());
                 break;
             case $("#3NA").val():
-                alert("Invitado repetido: " + $("#3NA").val());
+              abrirPopup("Error", "Invitado repetido: " + $("#3NA").val());
                 break;
             case $("#4NA").val():
-                alert("Invitado repetido: " + $("#4NA").val());
+              abrirPopup("Error", "Invitado repetido: " + $("#4NA").val());
                 break;
             case $("#5NA").val():
-                alert("Invitado repetido: " + $("#5NA").val());
+              abrirPopup("Error", "Invitado repetido: " + $("#5NA").val());
                 break;
             case $("#6NA").val():
-                alert("Invitado repetido: " + $("#6NA").val());
+              abrirPopup("Error", "Invitado repetido: " + $("#6NA").val());
                 break;
             case $("#7NA").val():
-                alert("Invitado repetido: " + $("#7NA").val());
+              abrirPopup("Error", "Invitado repetido: " + $("#7NA").val());
                 break;
             case $("#8NA").val():
-                alert("Invitado repetido: " + $("#8NA").val());
+              abrirPopup("Error", "Invitado repetido: " + $("#8NA").val());
                 break;
             case $("#9NA").val():
-                alert("Invitado repetido: " + $("#9NA").val());
+              abrirPopup("Error", "Invitado repetido: " + $("#9NA").val());
                 break;
             case $("#10NA").val():
-                alert("Invitado repetido: " + $("#10NA").val());
+              abrirPopup("Error", "Invitado repetido: " + $("#10NA").val());
                 break;
             default:
-                alert(resultado);
+              abrirPopup("", resultado);
           }
         });
       }
@@ -302,7 +302,7 @@ else{
           
         funcionAjax.done(function(resultado)
         { 
-          alert(resultado);
+          abrirPopup("", resultado);
           if (resultado == "La mesa fue eliminada y el orden de mesas fue reestablecido") {
             $("#menuMisFiestas").load("FormularioMesa.php");
           };
@@ -340,7 +340,7 @@ else{
         funcionAjax.done(function(resultado)
         {
           if (resultado == "1") {
-            alert("Guardar al menos una mesa para poder descargar");
+            abrirPopup("Error", "Guardar al menos una mesa para poder descargar");
           } 
           else
           {
@@ -361,7 +361,7 @@ else{
         funcionAjax.done(function(resultado)
         {
           if (resultado == "1") {
-            alert("Guardar al menos una mesa para poder mostrar estadísticas");
+            abrirPopup("Error", "Guardar al menos una mesa para poder mostrar estadísticas");
           } 
           else
           {
@@ -369,6 +369,25 @@ else{
           };
         });
       }
+
+        function abrirPopup(titulo, texto){
+          var funcionAjax =$.ajax({
+              url:"Popup.php", type:"post",
+              data:{
+                titulo:titulo,
+                texto:texto
+              }});
+
+
+          funcionAjax.done(function(resultado){
+            $("#popup").html(resultado);
+        });
+      }
+
+        function cerrarPopup(){
+            $("#popup").html("");
+      }
+
     </script>
     
   </head>
@@ -393,6 +412,9 @@ else{
         <h1 style="float: right;line-height: 20px;"><?php //echo $fecha; ?></h1>
 -->
   	  </div>
+
+<div id="popup">
+</div>
       <div class="menuMenu">
         <form>
           <br>

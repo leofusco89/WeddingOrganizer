@@ -14,6 +14,17 @@ $usuario = Usuarios::TraerUnUsuario($_SESSION["usuarioActual"]);
   <form onsubmit="editarFiesta();return false;">
   <br>
   <br>
+
+  <table >
+    <tbody>
+      <tr>
+       <td width="25%" style="vertical-align: baseline; padding-right: 10px;">
+
+  <input id="mapa"   type="button" value="Ver en mapa" onclick="VerEnMapa('<?php echo $fiesta->provincia;?>', '<?php echo $fiesta->calle;?>' + ' '  + '<?php echo $fiesta->numero;?>', '<?php echo $fiesta->localidad;?>', 'Fiesta de <?php echo $usuario->nombre;?> <?php echo $usuario->apellido;?>')">
+  <input type="submit" value="Editar" /><input type="button" value="Administrar fiesta" onclick="AdministrarInvitados()"/>
+  </td>
+       <td>
+
   <p>Fecha     </p><input id="fecha"  type="date" readonly style="background-color: #FFE2EA;"
       value="<?php echo $fiesta->fecha;?>">
   <p>Invitación    </p><textarea id="invitacion" readonly style="background-color: #FFE2EA;"><?php echo $fiesta->invitacion;?></textarea>
@@ -25,8 +36,9 @@ $usuario = Usuarios::TraerUnUsuario($_SESSION["usuarioActual"]);
   <p>Calle    </p><input id="calle"   type="text"     maxlength="25" readonly style="background-color: #FFE2EA;"
       value="<?php echo $fiesta->calle;?>">
   <p>Numero  </p><input id="numero" type="text"     maxlength="11" readonly style="background-color: #FFE2EA;"
-      value="<?php echo $fiesta->numero;?>">
-  <input id="mapa"   type="button" value="Ver en mapa" onclick="VerEnMapa('<?php echo $fiesta->provincia;?>', '<?php echo $fiesta->calle;?>' + ' '  + '<?php echo $fiesta->numero;?>', '<?php echo $fiesta->localidad;?>', 'Fiesta de <?php echo $usuario->nombre;?> <?php echo $usuario->apellido;?>')">
+      value="<?php echo $fiesta->numero;?>"></td>
+      </tr>
+    </tbody> 
+  </table>
   <div id="principal"></div>
-  <input type="submit" value="Editar" /><input type="button" value="Administrar invitados" onclick="AdministrarInvitados()"/>
   </form>

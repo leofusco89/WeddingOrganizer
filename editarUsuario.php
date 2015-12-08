@@ -91,22 +91,39 @@ else{
       {
           switch(resultado) {
             case "1":
-                alert("Error: Nueva Contraseña y Confirmar Nueva Contraseña no son iguales");
+              abrirPopup("Error", "Nueva Contraseña y Confirmar Nueva Contraseña no son iguales");
                 break;
             case "2":
-                alert("Error: Contraseña actual no coincide con la contraseña del usuario");
+              abrirPopup("Error", "Contraseña actual no coincide con la contraseña del usuario");
                 break;
             case "3":
                 alert("Sus datos fueron actualizados");
                 window.location.href="Menu.php";
                 break;
             default:
-                alert(resultado);
+              abrirPopup("", resultado);
 
         }
       }
       );
     }
+        function abrirPopup(titulo, texto){
+          var funcionAjax =$.ajax({
+              url:"Popup.php", type:"post",
+              data:{
+                titulo:titulo,
+                texto:texto
+              }});
+
+
+          funcionAjax.done(function(resultado){
+            $("#popup").html(resultado);
+        });
+      }
+
+        function cerrarPopup(){
+            $("#popup").html("");
+      }
   </script>    
   </head>
 
@@ -133,11 +150,20 @@ else{
 
       <br>
       <br>
-      <div id="menuRegister">
+<div id="popup">
+</div>
+      <div id="menuRegister" width="1100px">
         <form onsubmit="actualizarUsuario();return false;">
           <h1>Actualice sus datos:</h1>
           <br>
           <br>
+          <table >
+    <tbody>
+      <tr>
+       <td width="25%" style="vertical-align: baseline; padding-right: 10px;">
+        <input type="submit" value="Guardar" /><input type="reset"/>
+        </td>
+       <td>
           <p>Nombre    </p><input id="nombre"   type="text"     maxlength="100" required  pattern="[A-Za-z\s]{1,}" value="<?php echo $usuario->nombre;?>" >
           <p>Apellido  </p><input id="apellido" type="text"     maxlength="100" required  pattern="[A-Za-z\s]{1,}" value="<?php echo $usuario->apellido;?>">
           <p>Sexo      </p>
@@ -162,8 +188,10 @@ else{
           <br>
           <p>Contraseña actual</p><input id="pass"     type="password" maxlength="16" required>
           <p>Nueva Contraseña</p><input id="nPass" type="password" maxlength="16">
-          <p>Confirmar Nueva Contraseña</p><input id="confNPass" type="password" maxlength="16">
-          <input type="submit" value="Guardar" /><input type="reset"/>
+          <p>Confirmar Nueva Contraseña</p><input id="confNPass" type="password" maxlength="16"></td>
+      </tr>
+    </tbody> 
+  </table>
         </form>
       </div>
   </body>

@@ -67,10 +67,10 @@ function validate(evt) {
       {
          switch(resultado) {
            case "1":
-               alert("Cantidad de mesas máximas no puede ser 0 o menos de 0");
+            abrirPopup("Error", "Cantidad de mesas máximas no puede ser 0 o menos que 0");
                break;
            default:
-             alert(resultado);
+            abrirPopup("Operación existosa", resultado);
          }
 
       }
@@ -94,13 +94,91 @@ function validate(evt) {
       funcionAjax.done(function(resultado)
       {
         alert("El usuario y sus dependencias fueron eliminadas");
-        $("#menuUsuarios").html(resultado);
+        window.location.href="Administrador.php";
 
       }
       );
     }
-
   </script>    
+  
+<script type="text/javascript">
+         //si le pongo llaves es un objeto, es lo mismo que poner new object
+      var datos = {};
+
+      //aca se define una función igualada a datos. O sea que datos a partir de ahora empieza a ser la función. Y la funcion cuando se termina abajo se autoinvoca
+      //Al crearse se invoca (con el cierre de llaves la estoy invocando)
+      //Lo unico que se ve de datos es var url donde tiene urLocal y urlEsterna
+
+      datos = (function(){
+
+        var local = "http://weddingorganizer.tuars.com/ws/usuarios/";
+        var externa = "http://weddingorganizer.tuars.com/ws/usuarios";
+
+        //var local = "http://localhost:8080/WeddingOrganizer/ws/usuarios/";
+        //var externa = "http://localhost:8080/WeddingOrganizer/ws/usuarios/";
+        
+        var url = {
+          urlLocal: local,
+          urlExterna: externa
+        };
+
+        return url;
+      })();
+  </script>
+    <script type="text/javascript">
+
+    function renderLista(data) {
+      
+      var lista = data == null ? [] : (data instanceof Array ? data : [data]);
+      
+      $('#tablaUsuarios tr:not(:first)').remove();
+      
+      $.each(lista, function(index, usuario) {
+            if (usuario.usuario != "admin") {
+              $('#tablaUsuarios').append("<tr><td>"+ usuario.usuario +
+                             "</td><td>"+ usuario.nombre + 
+                             "</td><td>"+ usuario.apellido +
+                             "</td><td>"+ usuario.sexo+
+                             "</td><td>"+ usuario.email +
+                             "</td><td><a onclick='EliminarUsuario(\""+ usuario.usuario +"\")' display='inline'><img src='img/eliminar.ico'/ style='cursor: pointer;'> </a></td></tr>");              
+            };
+
+      });
+    }
+    function cargar(){
+        $.ajax({
+              type: "GET",
+              url: datos.urlLocal,
+              success: function(data, textStatus, jqXHR){
+                  // console.log(data);
+                  renderLista(data);
+              },
+              error: function(jqXHR, textStatus, errorThrown){
+                  // console.log(errorThrown);
+                abrirPopup("Error", "No se pudo modificar " + errorThrown);
+              }
+          });
+    }
+
+        function abrirPopup(titulo, texto){
+          var funcionAjax =$.ajax({
+              url:"Popup.php", type:"post",
+              data:{
+                titulo:titulo,
+                texto:texto
+              }});
+
+
+          funcionAjax.done(function(resultado){
+            $("#popup").html(resultado);
+        });
+      }
+
+        function cerrarPopup(){
+            $("#popup").html("");
+      }
+
+    </script>  
   </head>
 
   <body background="img/bgpattern.jpg">  
@@ -118,6 +196,9 @@ function validate(evt) {
 
       <br>
       <br>
+
+<div id="popup">
+</div>
       <div id="menuAdmin" style="width: 350px;">
         <form onsubmit="actualizarConfiguracion();return false;">
           <h1>Configuración:</h1>
@@ -144,30 +225,13 @@ function validate(evt) {
           <td>Email</td>
           <td></td>
         </tr>
-  
+        <tbody>   
         <?php
-
-
-  $usuarios = Usuarios::TraerTodosLosUsuarios();
-
-          foreach ($usuarios as $unUsuario) {
-
-            if ($unUsuario->usuario != "admin") {
-              echo 
-              "<tr>
-                <td>".$unUsuario->usuario."</td>
-                <td>".$unUsuario->nombre."</td>
-                <td>".$unUsuario->apellido."</td>
-                <td>".$unUsuario->sexo."</td>
-                <td>".$unUsuario->email."</td>
-                <td>
-        <a onclick='EliminarUsuario(\"$unUsuario->usuario\")' display='inline'>
-          <img src='img/eliminar.ico'/ style='cursor: pointer;'>
-        </a></td>
-               </tr>";
-            }
-          }
+          echo "<script>";
+          echo "cargar()";
+          echo "</script>";  
         ?>
+      </tbody> 
       </table>
       </div>
   </body>

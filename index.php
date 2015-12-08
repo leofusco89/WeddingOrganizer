@@ -42,23 +42,43 @@ if (isset($_SESSION["usuarioActual"]))
                       window.location.href="Administrador.php";
                       break;
                   default:
-                    alert("Usuario o password incorrecto");
+                    abrirPopup("Error", "Usuario o password incorrecto");
                 }
 		});
 
         }
 
+        function abrirPopup(titulo, texto){
+          var funcionAjax =$.ajax({
+              url:"Popup.php", type:"post",
+              data:{
+                titulo:titulo,
+                texto:texto
+              }});
+
+
+          funcionAjax.done(function(resultado){
+            $("#popup").html(resultado);
+        });
+      }
+
+        function cerrarPopup(){
+            $("#popup").html("");
+      }
     </script>
   </head>
 
   <body style="background-image: url(../img/bg.jpg);">
-
     <div class="Indexbody"></div>
 		<div class="Indexgrad"></div>
 		<div class="Indexheader">
 			<div>Wedding<span>Organizer</span></div>
 		</div>
 		<br>
+
+    <div id="popup">
+    </div>
+
 		<div class="Indexlogin">
 				<input type="text" 	   id="user" placeholder="usuario" 	name="user" onkeydown="if (event.keyCode == 13) document.getElementById('login').click()"
           value="<?php 

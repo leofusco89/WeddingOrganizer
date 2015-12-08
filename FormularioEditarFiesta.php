@@ -21,8 +21,18 @@ function validate(evt) {
   <form onsubmit="UpdateFiesta();return false;">
   <br>
   <br>
+  <table >
+    <tbody>
+      <tr>
+       <td width="25%" style="vertical-align: baseline; padding-right: 10px;">
+      
+  <input id="mapa"   type="button" value="Ver en mapa" onclick="BrindarDatosVerEnMapa()">
+  <input type="submit" value="Actualizar" style="width: 100%;"/>
+  </td>
+       <td>
   <p>Fecha     </p><input id="fecha"  type="date" required
-    value="<?php echo $_POST["fecha"];?>">
+    value="<?php echo $_POST["fecha"];?>" min="<?php $fecha = date("Y-m-d");
+                                                    echo date('Y-m-d', strtotime($fecha. ' + 14 days')); ?>">
   <p>Invitación    </p><textarea id="invitacion" required><?php echo $_POST["invitacion"];?></textarea>
   <p>Provincia</p><input id="provincia"   type="text" required maxlength="20"
     value="<?php echo $_POST["provincia"];?>" pattern="[A-Za-z\s]{1,}">
@@ -33,7 +43,9 @@ function validate(evt) {
     value="<?php echo $_POST["calle"];?>" pattern="[A-Za-z\s]{1,}">
   <p>Numero  </p><input id="numero" type="text"     maxlength="11" required
     value="<?php echo $_POST["numero"];?>" onkeypress='validate(event)'>
-  <input id="mapa"   type="button" value="Ver en mapa" onclick="BrindarDatosVerEnMapa()">
-  <div id="principal"></div>
-  <input type="submit" value="Actualizar" style="width: 100%;"/>
+       </td>
+      </tr>
+    </tbody> 
+  </table>
 </form>
+  <div id="principal"></div>

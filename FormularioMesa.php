@@ -37,14 +37,25 @@
 </div>
 
 <div id="tablaInvitados">
+<table >
+    <tbody>
+      <tr>
+       <td width="200px" style="vertical-align: baseline; padding-right: 10px;">
+<input type="button" value="Guardar mesa" onclick="GuardarMesa(1)" style="margin-bottom: 5.5%;width: 90%;height: 50;line-height: 0px;"/>
+<br>
+<input type="button" value="Estadísticas" onclick="Grafico()" style="margin-bottom: 5.5%;width: 90%;height: 50;line-height: 0px;"/>
+<br>
+<input type="button" value="Descargar mesas" onclick="DescargarMesas()" style="margin-bottom: 5.5%;width: 90%;height: 50;line-height: 0px;"/>
+</td>
+       <td>
 <table id="tablaMesa">
-	<tbody>
-	<thead>
+  <tbody>
+  <thead>
         <tr>
-			<th width=70% style="text-align: center;" >Invitado</th>
-			<th  style="text-align: center;">Asistencia</th>
-		</tr>
-	</thead>
+      <th width=70% style="text-align: center;" >Invitado</th>
+      <th  style="text-align: center;">Asistencia</th>
+    </tr>
+  </thead>
   <?php 
   $maxInvitadosPorMesa = 10;
     
@@ -85,15 +96,14 @@
   
   ?>
 
-	</tbody>
-</table>
+  </tbody>
+</table></td>
+      </tr>
+    </tbody> 
+  </table>
 <br>
-<div style="text-align: center;">
-<input type="button" value="Guardar mesa" onclick="GuardarMesa(1)" style="margin-bottom: 5.5%;width: 90%;height: 50;line-height: 0px;"/>
-<br><br>
-<input type="button" value="Estadísticas de asistencia" onclick="Grafico()" style="margin-bottom: 5.5%;width: 90%;height: 50;line-height: 0px;"/>
-<div id="grafico" style="width: 600px;">
-</div><br>
-<input type="button" value="Descargar mesas" onclick="DescargarMesas()" style="margin-bottom: 5.5%;width: 90%;height: 50;line-height: 0px;"/>
+
+
+<div id="grafico" style="width: 100%;">
 </div>
 </div>
